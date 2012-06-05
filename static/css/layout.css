@@ -1,0 +1,9 @@
+@import 'common/reset.css';
+@import 'common/global.css';
+
+body {
+	min-width: 1000px;
+	font: .9375em Helvetica, Arial, sans-serif; /* 15px */
+	color: #2d3038;
+	background: #6F7683 url(../img/common/bg.png) 50% 0;
+}
