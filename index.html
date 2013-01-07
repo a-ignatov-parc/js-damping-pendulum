@@ -9,7 +9,13 @@
 		<link href="static/css/main.css" media="screen" rel="stylesheet" type="text/css" />
 
 		<script type="text/javascript" src="static/js/libs/jquery.min.js"></script>
-		<script type="text/javascript" src="static/js/libs/jquery.transit.min.js"></script>
+
+		<script type="text/javascript" src="static/js/libs/gsap/plugins/CSSPlugin.js"></script>
+		<script type="text/javascript" src="static/js/libs/gsap/easing/EasePack.js"></script>
+		<script type="text/javascript" src="static/js/libs/gsap/TweenLite.js"></script>
+
+		<!--script type="text/javascript" src="static/js/libs/gsap/TweenMax.js"></script-->
+
 		<script type="text/javascript" src="static/js/pendulum.js"></script>
 		<script type="text/javascript">
 			$(function() {
@@ -20,9 +26,10 @@
 					pendulum = new Pendulum;
 
 				form.on('submit', function(event) {
-					pendulum.animate(img, input.val() || 30);
+					pendulum.animate(img, input.val() || 20);
 					return false;
 				});
+
 				btn.on('click', function(event) {
 					form.trigger('submit');
 					return false;
@@ -35,7 +42,7 @@
 			<form class="b-form">
 				<div class="b-input b-input--big b-input--bottom_indent">
 					<span class="b-input-indent">
-						<input class="b-input-field" type="text" placeholder="pendulum angle" value="50" />
+						<input class="b-input-field" type="text" placeholder="pendulum angle" value="20" />
 					</span>
 				</div>
 				<a href="#animate" class="b-button b-button--center b-button--very_big b-button--big_font b-button--shadow b-button--overlap b-button--overlap_bottom">

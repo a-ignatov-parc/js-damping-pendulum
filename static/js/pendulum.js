@@ -25,31 +25,38 @@ Pendulum.prototype = {
 	animatePendulum: function(target, deg, angle) {
 		if (target && (deg != null || angle != null)) {
 			var self = this,
+				fxLib = TweenLite || TweenMax,
 				angle = deg ? this.degToRad(deg) : angle,
 				minAnimAngle = .5,
 				timeUnits = 800,
-				fxSpeed = 1000;
+				fxSpeed = 1; // В библиотеке `GSAP` время анимаций измеряется в секундах
 
 			if (deg == null) {
 				angle += this.torque(angle, timeUnits);
 			}
 			target instanceof $ || (target = $(target));
-			target
-				.css('transform-origin', '50% 0')
-				.transition({
-					rotate: angle + 'rad'
-				}, fxSpeed, function() {
-					// Выставляем таймер во избежание артефактов во время анимации
-					setTimeout(function() {
-						if (Math.abs(self.radToDeg(angle)) >= minAnimAngle) {
-							self.animatePendulum(target, null, angle);
-						} else {
-							target.transition({
-								rotate: 0
-							}, fxSpeed);
-						}
-					}, 10);
-				});
+
+			// Новый способ анимации через `GSAP.tween`.  
+			// Для текущей реализации достаточно подключить: `CSSPlugin`, `EasePack`, `TweenLite`.  
+			// Если же потребуются больший функционал, то стоит подключить `TweenMax`
+			fxLib.to(target, fxSpeed, {
+				css: {
+					transformOrigin: '50% 0',
+					rotation: angle + 'rad'
+				},
+				onComplete: function() {
+					if (Math.abs(self.radToDeg(angle)) >= minAnimAngle) {
+						self.animatePendulum(target, null, angle);
+					} else {
+						fxLib.to(target, fxSpeed, {
+							css: {
+								rotation: 0
+							}
+						});
+					}
+				},
+				ease: Quad.easeInOut
+			});
 		}
 	},
 
